@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using P05Shop.API.Models;
- 
+using P05Shop.API.Services.AuthService;
 using P06Shop.Shared.Services.ProductService;
 using System.Text;
 
@@ -21,6 +21,7 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddScoped<IProductService,P05Shop.API.Services.ProductService>();
+builder.Services.AddScoped<IAuthService,AuthService>();
 
 // addScoped - oznacza, że w trakcie jednego requestu będzie istniała tylko jedna instancja klasy ProductService
 // addTransient - oznacza, że obiekt będzie tworzony za każdym razem, gdy odwolujemy się do niego
