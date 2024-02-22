@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:P04WeatherForecastWPF.Client"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="LoginView" Height="176" Width="234">
     <Grid Margin="10">
@@ -24,6 +25,15 @@
         <Label Content="Password:" Grid.Row="1" Grid.Column="0"></Label>
         <PasswordBox x:Name="PasswordBox" Grid.Row="1" Grid.Column="1"></PasswordBox>
 
-        <Button Click="LoginButton_Click" x:Name="LoginButton" Margin="5" Content="Login" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></Button>
+        <Button  Click="LoginButton_Click" x:Name="LoginButton" Margin="5" Content="Login" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseEnter">
+                    <i:InvokeCommandAction Command="{Binding MouseEnterCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+           
+
+
+        </Button>
     </Grid>
 </Window>

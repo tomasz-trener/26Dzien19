@@ -12,7 +12,7 @@ namespace P04WeatherForecastWPF.Client.ViewModels
 {
     public partial class LoginViewModel : ObservableObject
     {
-        private static string Token { get; set; }= string.Empty;
+        private static string Token { get; set; } = string.Empty;
 
         private readonly IAuthService _authService;
 
@@ -25,10 +25,10 @@ namespace P04WeatherForecastWPF.Client.ViewModels
         [ObservableProperty]
         private UserLoginDto userLoginDto;
 
-      
+
         public async Task Login(string password)
         {
-             UserLoginDto.Password = password;
+            UserLoginDto.Password = password;
 
             var result = await _authService.Login(UserLoginDto);
             if (result.Success)
@@ -39,6 +39,12 @@ namespace P04WeatherForecastWPF.Client.ViewModels
             {
                 //wyświetlenie komunikatu o błędzie
             }
+        }
+
+        [RelayCommand]
+        public async Task MouseEnter()
+        {
+
         }
     }
 }
