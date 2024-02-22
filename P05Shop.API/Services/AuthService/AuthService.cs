@@ -36,7 +36,23 @@ namespace P05Shop.API.Services.AuthService
             }
 
             // Create password hash
+            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
 
+            //przypisujemy hash i sól do użytkownika
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            //dodajemy użytkownika do bazy
+            await _context.Users.AddAsync(user);
+            // zapisujemy zmiany w bazie
+            await _context.SaveChangesAsync();
+
+            return new ServiceReponse<int>
+            {
+                Success = true,
+                Data = user.Id, 
+                Message = "Registration successful!"
+            };
         }
 
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
