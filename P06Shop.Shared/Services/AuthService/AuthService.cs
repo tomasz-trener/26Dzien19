@@ -1,22 +1,33 @@
 ﻿using P06Shop.Shared.Auth;
+using System.Net.Http.Json;
 
 namespace P06Shop.Shared.Services.AuthService
 {
     public class AuthService : IAuthService
     {
-        public Task<ServiceReponse<bool>> ChangePassword(string newPassword)
+        private readonly HttpClient _httpClient;
+
+        public AuthService(HttpClient httpClient)
         {
-            throw new NotImplementedException();
+                _httpClient = httpClient;
+        }
+        public async Task<ServiceReponse<bool>> ChangePassword(string newPassword)
+        {
+            var result = await _httpClient.PostAsJsonAsync("api/auth/changePassword", newPassword);
+            return await result.Content.ReadFromJsonAsync<ServiceReponse<bool>>();
         }
 
-        public Task<ServiceReponse<string>> Login(UserLoginDto userLoginDto)
+        public async Task<ServiceReponse<string>> Login(UserLoginDto userLoginDto)
         {
-            throw new NotImplementedException();
+            var result = await _httpClient.PostAsJsonAsync("api/auth/login", userLoginDto);
+            var data = await result.Content.ReadFromJsonAsync<ServiceReponse<string>>();
+            return data;
         }
 
-        public Task<ServiceReponse<int>> Register(UserRegisterDto userLoginDto)
+        public async Task<ServiceReponse<int>> Register(UserRegisterDto userLoginDto)
         {
-            throw new NotImplementedException();
+            var result = await _httpClient.PostAsJsonAsync("api/auth/register", userLoginDto);
+            return await result.Content.ReadFromJsonAsync<ServiceReponse<int>>();
         }
     }
 }
