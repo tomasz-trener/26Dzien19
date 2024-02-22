@@ -13,6 +13,7 @@
     </Window.Resources>       
     <DockPanel>
         <StackPanel Width="150" DockPanel.Dock="Left">
+            <Button Command="{Binding OpenLoginWindowCommand}" Content="Login"/>
             <Button Command="{Binding OpenWindowCommand}" Content="Open Second Window"/>
             <Button Command="{Binding OpenShowWindowCommand}" Content="Open Shop"/>
             <Label Content="City:"></Label>

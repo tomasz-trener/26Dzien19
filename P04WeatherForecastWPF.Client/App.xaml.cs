@@ -5,6 +5,7 @@ using P04WeatherForecastWPF.Client.Services;
 using P04WeatherForecastWPF.Client.ViewModels;
 using P06Shop.Shared.Confguration;
 using P06Shop.Shared.MessageBox;
+using P06Shop.Shared.Services.AuthService;
 using P06Shop.Shared.Services.ProductService;
 using System.Configuration;
 using System.Data;
@@ -62,6 +63,7 @@ namespace P04WeatherForecastWPF.Client
             services.AddSingleton<IMainViewModel, MainViewModelV3>();
             services.AddSingleton<SecondWindowViewModel>();
             services.AddSingleton<ProductsViewModel>();
+            services.AddSingleton<LoginViewModel>();
         }
 
         private void ConfigureAppServices(IServiceCollection services, AppSettings appSettings)
@@ -81,6 +83,7 @@ namespace P04WeatherForecastWPF.Client
             services.AddTransient<SecondWindow>();
             services.AddTransient<ShopProductsView>();
             services.AddTransient<ProductDetailsView>();
+            services.AddTransient<LoginView>();
         }
 
         private void ConfigureHttpClients(IServiceCollection services, AppSettings appSettings)
@@ -94,6 +97,7 @@ namespace P04WeatherForecastWPF.Client
 
             //żeby skonfigurować HttpClienta, musimy dodać pakiet Microsoft.Extensions.Http
             services.AddHttpClient<IProductService, ProductService>(client => client.BaseAddress = urliBulder.Uri);
+            services.AddHttpClient<IAuthService, AuthService>(client => client.BaseAddress = urliBulder.Uri);
         }
 
         private void OnStartup(object sender, StartupEventArgs e)

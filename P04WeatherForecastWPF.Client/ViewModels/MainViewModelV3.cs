@@ -105,6 +105,12 @@ namespace P04WeatherForecastWPF.Client.ViewModels
             productsViewModel.GetProductsAsync();
         }
 
+        [RelayCommand]
+        public void OpenLoginWindow()
+        {
+            LoginView loginView = _serviceProvider.GetService<LoginView>();
+            loginView.Show();
+        }
 
     }
 }
