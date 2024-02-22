@@ -1,5 +1,6 @@
 ﻿@page "/products/editproduct/{Id:int}"
 
+@attribute [Authorize(Roles ="Customer2")]
 @inject IProductService ProductService
 @inject NavigationManager NavigationManager
 
