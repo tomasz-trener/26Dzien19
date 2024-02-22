@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using P06Shop.Shared;
+using P06Shop.Shared.Auth;
 using P07Shop.DataSeeder;
 
 namespace P05Shop.API.Models
@@ -13,6 +14,8 @@ namespace P05Shop.API.Models
         }
 
         public DbSet<Product> Products { get; set; }
+
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

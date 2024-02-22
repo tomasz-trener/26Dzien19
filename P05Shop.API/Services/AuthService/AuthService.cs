@@ -1,10 +1,19 @@
-﻿using P06Shop.Shared;
+﻿using Microsoft.EntityFrameworkCore;
+using P05Shop.API.Models;
+using P06Shop.Shared;
 using P06Shop.Shared.Auth;
 
 namespace P05Shop.API.Services.AuthService
 {
     public class AuthService : IAuthService
     {
+        private readonly DataContext _context;
+
+        public AuthService(DataContext context)
+        {
+            _context = context;
+        }
+
         public Task<ServiceReponse<bool>> ChangePassword(int userId, string newPassword)
         {
             throw new NotImplementedException();
@@ -15,14 +24,38 @@ namespace P05Shop.API.Services.AuthService
             throw new NotImplementedException();
         }
 
-        public Task<ServiceReponse<int>> Register(User user, string password)
+        public async Task<ServiceReponse<int>> Register(User user, string password)
         {
-            throw new NotImplementedException();
+            if(await UserExists(user.Email))
+            {
+                 return new ServiceReponse<int>
+                 {
+                     Success = false,
+                     Message = "User already exists"
+                 };
+            }
+
+            // Create password hash
+
         }
 
-        public Task<ServiceReponse<bool>> UserExists(string email)
+        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            throw new NotImplementedException();
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                // generowanie losowej soli
+                passwordSalt = hmac.Key;
+                // generowanie hasha 
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
+        }
+
+        public async Task<bool> UserExists(string email)
+        {
+            if (await _context.Users.AnyAsync(x => x.Email.ToLower().Equals(email.ToLower())))
+                return true;
+
+            return false;
         }
     }
 }
