@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using P06Shop.Shared.Confguration;
@@ -17,6 +18,10 @@ var uriBuilder = new UriBuilder(appSettingsSection.BaseApiUrl)
 {
     Path = appSettingsSection.ProductEndpoint.BaseUrl
 };
+
+builder.Services.AddBlazoredLocalStorage();
+
+
 // wymagna paczka: Microsoft.Extensions.Http
 builder.Services.AddHttpClient<IProductService, ProductService>(client => client.BaseAddress = uriBuilder.Uri);
 builder.Services.Configure<AppSettings>(appSettings);
