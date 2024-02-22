@@ -64,5 +64,7 @@ namespace P11BlazorWebAssembly.Client.Services
             }
             return Convert.FromBase64String(base64);
         }
+
+         
     }
 }
