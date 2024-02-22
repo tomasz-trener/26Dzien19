@@ -1,0 +1,59 @@
+﻿@page "/register"
+@using P06Shop.Shared.Auth
+@using P06Shop.Shared.Services.AuthService
+
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+<h3>Register</h3>
+
+
+<EditForm Model="userRegisterDto" OnValidSubmit="HandleRegister">
+
+<DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <InputText id="email" class="form-control" @bind-Value="userRegisterDto.Email" />
+    </div>
+
+    <div class="form-group">
+        <label for="userName">User name</label>
+        <InputText id="userName" class="form-control" @bind-Value="userRegisterDto.UserName" />
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <InputText id="password" class="form-control" @bind-Value="userRegisterDto.Password" />
+    </div>
+
+    <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <InputText id="confirmPassword" class="form-control" @bind-Value="userRegisterDto.ConfirmPassword" />
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Register</button>
+</EditForm>
+
+
+<p>@message</p>
+
+
+@code {
+    UserRegisterDto userRegisterDto = new UserRegisterDto();
+    string message = string.Empty;
+
+    async Task HandleRegister()
+    {
+        var result = await AuthService.Register(userRegisterDto);
+        if (result.Success)
+        {
+            NavigationManager.NavigateTo("login");
+        }
+        else
+        {
+            message = result.Message;
+        }
+    }
+
+}
