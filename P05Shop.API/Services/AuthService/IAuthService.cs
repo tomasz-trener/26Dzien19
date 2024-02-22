@@ -10,6 +10,6 @@ namespace P05Shop.API.Services.AuthService
 
         Task<ServiceReponse<bool>> ChangePassword(int userId, string newPassword);
 
-        Task<ServiceReponse<bool>> UserExists(string email);
+        Task<bool> UserExists(string email);
     }
 }

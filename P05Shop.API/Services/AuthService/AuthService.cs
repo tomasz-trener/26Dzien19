@@ -1,22 +1,48 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using P05Shop.API.Models;
 using P06Shop.Shared;
 using P06Shop.Shared.Auth;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace P05Shop.API.Services.AuthService
 {
     public class AuthService : IAuthService
     {
         private readonly DataContext _context;
+        private readonly IConfiguration _config;
 
-        public AuthService(DataContext context)
+        public AuthService(DataContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
 
-        public Task<ServiceReponse<bool>> ChangePassword(int userId, string newPassword)
+        public async Task<ServiceReponse<bool>> ChangePassword(int userId, string newPassword)
         {
-            throw new NotImplementedException();
+            var user = await _context.Users.FindAsync(userId); 
+            if(user == null)
+            {
+                return new ServiceReponse<bool>
+                {
+                    Success = false,
+                    Message = "User not found"
+                };
+            }
+
+            CreatePasswordHash(newPassword, out byte[] passwordHash, out byte[] passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            await _context.SaveChangesAsync();
+            return new ServiceReponse<bool>
+            {
+                Success = true,
+                Message = "Password changed successfully",
+                Data = true
+            };
         }
 
         public async Task<ServiceReponse<string>> Login(string email, string password)
@@ -36,8 +62,34 @@ namespace P05Shop.API.Services.AuthService
             else
             {
                 response.Success = true;
-                response.Data = user.Id.ToString();
+                response.Data = CreateToken(user);
+                response.Message = "Login successful!";
             }
+
+            return response;
+        }
+
+        private string CreateToken(User user)
+        {
+             List<Claim> claims = new List<Claim>()
+             {
+                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                 new Claim(ClaimTypes.Name, user.Email),
+                 new Claim(ClaimTypes.Role, user.Role), 
+                 new Claim("DateCreated", user.DateCreated.ToString())
+             };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var token = new JwtSecurityToken(
+                             claims: claims,
+                             expires: DateTime.Now.AddDays(1),
+                             signingCredentials: creds
+                            );
+
+            var tokenHandler = new JwtSecurityTokenHandler().WriteToken(token);
+            return tokenHandler;
         }
 
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
