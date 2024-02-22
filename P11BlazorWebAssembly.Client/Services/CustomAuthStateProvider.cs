@@ -6,12 +6,12 @@ using System.Text.Json;
 
 namespace P11BlazorWebAssembly.Client.Services
 {
-    public class CustomStateProvider : AuthenticationStateProvider
+    public class CustomAuthStateProvider : AuthenticationStateProvider
     {
         private readonly ILocalStorageService _localStorageService;
         private readonly HttpClient _httpClient;
 
-        public CustomStateProvider(ILocalStorageService localStorageService, HttpClient httpClient)
+        public CustomAuthStateProvider(ILocalStorageService localStorageService, HttpClient httpClient)
         {
             _httpClient = httpClient;
             _localStorageService = localStorageService;
