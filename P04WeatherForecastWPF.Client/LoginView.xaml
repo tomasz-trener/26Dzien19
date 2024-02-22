@@ -23,7 +23,8 @@
         <TextBox Text="{Binding UserLoginDto.Email}" x:Name="EmailTextBox" Grid.Row="0" Grid.Column="1"></TextBox>
 
         <Label Content="Password:" Grid.Row="1" Grid.Column="0"></Label>
-        <PasswordBox x:Name="PasswordBox" Grid.Row="1" Grid.Column="1"></PasswordBox>
+        <PasswordBox x:Name="PasswordBox" Grid.Row="1" Grid.Column="1">
+        </PasswordBox>
 
         <Button  Click="LoginButton_Click" x:Name="LoginButton" Margin="5" Content="Login" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
             <i:Interaction.Triggers>

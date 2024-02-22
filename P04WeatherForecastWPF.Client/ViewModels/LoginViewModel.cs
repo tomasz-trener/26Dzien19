@@ -46,5 +46,7 @@ namespace P04WeatherForecastWPF.Client.ViewModels
         {
 
         }
+
+
     }
 }
