@@ -9,6 +9,7 @@ namespace P05Shop.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;

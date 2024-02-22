@@ -23,10 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P11BlazorWebAssembly.Client
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1D404B1F-E86B-415A-BCED-F61433C40F2A}"
 	ProjectSection(SolutionItems) = preProject
+		Dzien19.postman_collection.json = Dzien19.postman_collection.json
 		Podsumowanie.txt = Podsumowanie.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P12MAUI.Client", "P12MAUI.Client\P12MAUI.Client.csproj", "{61F5EAE0-E7C8-4380-B4DE-A90E4A1E7B94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P12MAUI.Client", "P12MAUI.Client\P12MAUI.Client.csproj", "{61F5EAE0-E7C8-4380-B4DE-A90E4A1E7B94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
