@@ -1,0 +1,28 @@
+﻿<Window x:Class="P04WeatherForecastWPF.Client.ShopProductsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P04WeatherForecastWPF.Client"
+        mc:Ignorable="d"
+        Title="ShopProductsView" Height="450" Width="800">
+    <StackPanel>
+        <Button Content="New Product" Command="{Binding NewCommand}"></Button>
+        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden" >
+            <ListView  ItemsSource="{Binding Products}" Height="409">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Label Content="{Binding Title}"></Label>
+                            <Label Content="{Binding Description}"></Label>
+                            <Button Command="{Binding DataContext.ShowDetailsCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
+                  CommandParameter="{Binding}"
+                  Content="Edit"></Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+        
+    </StackPanel>
+</Window>

@@ -1,0 +1,30 @@
+﻿@page
+@model P08ShopWebApp.Client.Pages.CalculatorBindingModel
+
+
+<p>Binding Approche</p>
+
+<form method="post" asp-page-handler="Add"> @* Wskazanie nazwy metody ktora zostanie wywolana *@
+	<label for="Number1">Number 1:</label>
+	<input id="Number1" name="Number1" value="@Model.Number1" />
+	<br />
+	<label for="Number2">Number 2:</label>
+	<input id="Number2" name="Number2" value="@Model.Number2" />
+
+	<br />
+	<input type="submit" value="Calculate sum" />
+	<p>Result: @Model.AddictionResult</p>
+</form>
+
+<form method="post" asp-page-handler="Substract">
+	@* Wskazanie nazwy metody ktora zostanie wywolana *@
+	<label for="Number1">Number 1:</label>
+	<input id="Number1" name="Number1" value="@Model.Number1" />
+	<br />
+	<label for="Number2">Number 2:</label>
+	<input id="Number2" name="Number2" value="@Model.Number2" />
+
+	<br />
+	<input type="submit" value="Calculate substraction" />
+	<p>Result: @Model.SubstractionResult</p>
+</form>

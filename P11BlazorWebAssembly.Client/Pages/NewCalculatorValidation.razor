@@ -1,0 +1,44 @@
+﻿@page "/newCalculatorValidation"
+@using System.ComponentModel.DataAnnotations
+
+<h3>NewCalculator validation</h3>
+
+
+<EditForm Model="model" OnValidSubmit="Sum">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div>
+        <label>Number1</label>
+        <InputNumber @bind-Value="model.Number1"></InputNumber>
+        <ValidationMessage For="@(() => model.Number1)" />
+        <br />
+        <label>Number2</label>
+        <InputNumber @bind-Value="model.Number2"></InputNumber>
+        <ValidationMessage For="@(() => model.Number2)" />
+        <button type="submit">Add</button>
+    </div>
+</EditForm>
+
+<p>Result: @model.Result</p>
+
+ 
+@code {
+    static OperationModel model = new OperationModel();
+
+    public class OperationModel
+    {
+        [Range(0, 100, ErrorMessage ="Number 1 must be in range 0 to 100")]
+        public int Number1 { get; set; }
+        
+        [Range(0, 100, ErrorMessage = "Number 2 must be in range 0 to 100")]
+        public int Number2 { get; set; }
+       
+        public int Result { get; set; }
+    }
+
+    void Sum()
+    {
+        model.Result = model.Number1 + model.Number2;
+    }
+
+}

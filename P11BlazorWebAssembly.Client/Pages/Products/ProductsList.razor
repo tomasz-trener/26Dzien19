@@ -1,0 +1,117 @@
+﻿@page "/products/productslist"
+
+@inject IProductService ProductService
+@inject NavigationManager NavigationManager
+
+<h3>ProductsList</h3>
+
+<p>
+    @* <a href="products/newProduct">New Product</a> *@
+    <NavLink href="products/createProduct" class="btn btn-primary">New Product</NavLink>
+</p>
+
+@if (products == null)
+{
+    <p><em>@message</em></p>
+}
+else
+{
+    <div>
+        <InputText @bind-Value="searchTerm" />
+        <button class="btn btn-primary" @onclick="Search">Search</button>
+    </div>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Barcode</th>
+                <th>Price</th>
+                <th>Release Date</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Title</td>
+                    <td>@product.Barcode</td>
+                    <td>@product.Price</td>
+                    <td>@product.ReleaseDate.ToShortDateString()</td>
+                    <td><button class="btn btn-primary" @onclick="()=>GoToEdit(product.Id)" >Edit</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary" @onclick="PreviousPage" >Previous</button>
+    <span>@currentPage</span>
+    <button class="btn btn-primary" @onclick="NextPage" >Next</button>
+}
+
+
+
+@code {
+    private List<Product> products;
+    private string message= "Loading products...";
+    private string searchTerm = string.Empty;
+
+    private int currentPage = 1;
+    private int pageSize = 10;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProducts();
+    }
+   
+    private async Task LoadProducts()
+    {
+        var response =  await ProductService.GetProductsAsync();
+        if (response.Success)
+        {
+            products = response.Data;
+        }
+        else
+        {
+            message = response.Message;
+        }
+    }
+
+    private void GoToEdit(int id)
+    {
+        NavigationManager.NavigateTo($"products/editProduct/{id}");
+    }
+
+    private async Task Search()
+    {
+        var response = await ProductService.SearchProductsAsync(searchTerm, currentPage, pageSize);
+        if (response.Success)
+        {
+            products = response.Data;
+        }
+        else
+        {
+            message = response.Message;
+        }
+    }
+
+    private async Task NextPage()
+    {
+        currentPage++;
+        await Search();
+    }
+
+private async Task PreviousPage()
+    {
+        if (currentPage > 1)
+        {
+            currentPage--;
+            await Search();
+        }
+    }
+
+}

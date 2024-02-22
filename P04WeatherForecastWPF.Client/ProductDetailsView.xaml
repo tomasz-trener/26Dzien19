@@ -1,0 +1,44 @@
+﻿<Window x:Class="P04WeatherForecastWPF.Client.ProductDetailsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P04WeatherForecastWPF.Client"
+        mc:Ignorable="d"
+        Title="ProductDetailsView" Height="450" Width="800" Closing="Window_Closing">
+    <StackPanel>
+        <Grid DataContext="{Binding SelectedProduct}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Title:" Grid.Row="0" Grid.Column="0" ></TextBlock>
+            <TextBox Text="{Binding Title}"  Grid.Row="0" Grid.Column="1" ></TextBox>
+
+            <TextBlock Text="Description:" Grid.Row="1" Grid.Column="0" ></TextBlock>
+            <TextBox Text="{Binding Description}"  Grid.Row="1" Grid.Column="1" ></TextBox>
+
+            <TextBlock Text="Barcode:" Grid.Row="2" Grid.Column="0" ></TextBlock>
+            <TextBox Text="{Binding Barcode}"  Grid.Row="2" Grid.Column="1" ></TextBox>
+
+            <TextBlock Text="Price:" Grid.Row="3" Grid.Column="0" ></TextBlock>
+            <TextBox Text="{Binding Price}"  Grid.Row="3" Grid.Column="1" ></TextBox>
+
+            <TextBlock Text="ReleaseDate:" Grid.Row="4" Grid.Column="0" ></TextBlock>
+            <TextBox Text="{Binding ReleaseDate}"  Grid.Row="4" Grid.Column="1" ></TextBox>
+        </Grid>
+        <StackPanel>
+            <Button Content="Speck" Command="{Binding RecognizeVoiceCommand}"></Button>
+            <Button Content="Save" Command="{Binding SaveCommand}"></Button>
+            <Button Content="Delete" Command="{Binding DeleteCommand}"></Button>
+        </StackPanel>
+    </StackPanel>
+</Window>
